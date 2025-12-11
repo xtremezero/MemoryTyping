@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MemoType</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Ambient Background -->
+        <div class="ambient-glow"></div>
+
+        <!-- Header -->
+        <header>
+            <h1>MemoType</h1>
+            <p>Improve your memory and typing skills.</p>
+        </header>
+
+        <!-- Screens -->
+        <main>
+            <!-- Setup Screen -->
+            <div id="screen-setup" class="screen active">
+                <div class="card">
+                    <div class="input-wrapper">
+                        <textarea id="setup-text" placeholder="Paste your text here..."></textarea>
+                        <div id="setup-error" class="error-toast hidden">Please enter at least 10 characters.</div>
+                    </div>
+                    <div class="button-group">
+                        <button id="btn-sample" class="btn btn-secondary">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            Sample Text
+                        </button>
+                        <button id="btn-start" class="btn btn-primary">
+                            <span>Start Game</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Difficulty Screen -->
+            <div id="screen-difficulty" class="screen">
+                <h2 class="section-title">Select Difficulty</h2>
+                <p class="sub-text">Choose your challenge level</p>
+                <div class="grid-3">
+                    <button class="card card-interactive difficulty-btn" data-difficulty="EASY">
+                        <div class="icon-box text-green">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </div>
+                        <h3>Easy</h3>
+                        <p>Partial words visible to guide your typing.</p>
+                    </button>
+                    <button class="card card-interactive difficulty-btn" data-difficulty="MEDIUM">
+                        <div class="icon-box text-yellow">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                        </div>
+                        <h3>Medium</h3>
+                        <p>Only the first few letters of words are visible.</p>
+                    </button>
+                    <button class="card card-interactive difficulty-btn" data-difficulty="HARD">
+                        <div class="icon-box text-red">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path></svg>
+                        </div>
+                        <h3>Hard</h3>
+                        <p>No visual hints. Rely entirely on your memory.</p>
+                    </button>
+                </div>
+                <div class="centered-action">
+                    <button id="btn-back-setup" class="link-btn">← Choose different text</button>
+                </div>
+            </div>
+
+            <!-- Memorize Screen -->
+            <div id="screen-memorize" class="screen">
+                <div class="flex-between">
+                    <div>
+                        <h2 class="section-title" style="text-align: left; font-size: 1.5rem; margin-bottom: 0;">Memorize Phase</h2>
+                        <p class="sub-text" style="text-align: left; margin-bottom: 0;">Read carefully. The text will become hidden.</p>
+                    </div>
+                    <div class="timer-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span id="memorize-timer">0:00</span>
+                    </div>
+                </div>
+                <div class="card memorize-card">
+                    <p id="memorize-display" class="typing-display" style="position: relative; overflow-y: auto; height: 300px; color: var(--text-main);"></p>
+                </div>
+                <div class="centered-action" style="margin-top: 2rem;">
+                    <button id="btn-ready" class="btn btn-primary btn-lg">I'm Ready to Type</button>
+                </div>
+            </div>
+
+            <!-- Playing Screen -->
+            <div id="screen-playing" class="screen">
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                <div class="flex-between">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <span id="playing-difficulty-badge" class="badge">EASY</span>
+                        <span class="stat-text" style="color: var(--text-muted); font-size: 0.9rem;">Mistakes: <span id="playing-mistakes" style="color: var(--accent-error); font-weight: 700;">0</span></span>
+                    </div>
+                    <button id="btn-restart-game" class="icon-btn" title="Restart Level">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"></path><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                    </button>
+                </div>
+                
+                <div class="card typing-container">
+                    <!-- The visual text renderer -->
+                    <div id="typing-display" class="typing-display"></div>
+                    <!-- The actual input -->
+                    <textarea id="typing-input" class="typing-input" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+                </div>
+                <div class="centered-action" style="margin-top: 1.5rem;">
+                    <p id="playing-hint" class="sub-text" style="margin-bottom: 0; font-size: 0.9rem; opacity: 0.7;"></p>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div id="screen-results" class="screen">
+                <div class="results-header">
+                    <div class="trophy-circle">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+                    </div>
+                    <h2 class="section-title">Session Complete</h2>
+                    <p style="color: var(--text-muted);">Memory and precision analysis.</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="stat-card card">
+                        <div class="stat-value" id="result-time">0s</div>
+                        <div class="stat-label">Total Time</div>
+                    </div>
+                    <div class="stat-card card">
+                        <div class="stat-value" id="result-mistakes" style="color: var(--accent-error);">0</div>
+                        <div class="stat-label">Mistakes</div>
+                    </div>
+                    <div class="stat-card card">
+                        <div class="stat-value" id="result-wpm">0</div>
+                        <div class="stat-label">Words / Min</div>
+                    </div>
+                    <div class="stat-card card">
+                        <div class="stat-value" id="result-accuracy" style="color: var(--accent-success);">0%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="btn-try-again" class="btn btn-secondary full-width">Retry Text</button>
+                    <button id="btn-new-game" class="btn btn-primary full-width">New Text</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>MemoType &copy; 2024</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
