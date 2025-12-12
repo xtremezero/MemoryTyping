@@ -28,6 +28,7 @@ const elements = {
     setupError: document.getElementById('setup-error'),
     btnSample: document.getElementById('btn-sample'),
     btnStart: document.getElementById('btn-start'),
+    uploadFile: document.getElementById('file-input'),
     
     difficultyBtns: document.querySelectorAll('.difficulty-btn'),
     btnBackSetup: document.getElementById('btn-back-setup'),
@@ -85,6 +86,17 @@ function switchScreen(screenName) {
     target.style.opacity = '1';
     target.classList.add('active');
 }
+
+elements.uploadFile.addEventListener('change', () => {
+    const file = elements.uploadFile.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        elements.setupText.value = e.target.result;
+    };
+    reader.readAsText(file);
+})
 
 // Setup Screen Logic
 elements.btnSample.addEventListener('click', () => {
